@@ -10,18 +10,18 @@ lista_compras(Itens, Troco) :-
     lista_compras(Item, TrocoAcumulado).
 
 comprar_item(Valor, Marcas, TrocoItem) :-
-    read(MaisBarato),
+    read(Preco),
     Marca is Marcas - 1,
-    mais_barato(Marca, MaisBarato),
+    mais_barato(Marca, Preco, MaisBarato),
     TrocoItem is Valor mod MaisBarato.
 
-mais_barato(0, MaisBarato).
-mais_barato(Marcas, MaisBarato) :-
+mais_barato(0, MenorPreco, MaisBarato):- MaisBarato is MenorPreco.
+mais_barato(Marcas, MenorPreco, MaisBarato) :-
     read(Preco),
-    PrecoBaixo is min(Preco, MaisBarato),
+    PrecoBaixo is min(Preco, MenorPreco),
     Marca is Marcas - 1,
-    mais_barato(Marca, PrecoBaixo).
+    mais_barato(Marca, PrecoBaixo, MaisBarato).
 
 main:-
     read(Itens),
-    lista_compras(Itens, 0).
+lista_compras(Itens, 0).
